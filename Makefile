@@ -19,4 +19,4 @@ examples/iife/demo.js: lib/esm/index.js examples/demo.tsx
 	yarn run build:examples
 
 clean:
-	rm -rf lib examples/iife/demo.js
+	git clean -fX lib examples
