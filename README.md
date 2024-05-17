@@ -10,7 +10,7 @@ npm install qrcode.react
 
 ## Usage
 
-`qrcode.react` exports three components, supporting rendering as SVG or Canvas. SVG is generally recommended as it is more flexible, but Canvas may be preferable.
+`qrcode.react` exports two components, supporting rendering as SVG or Canvas. SVG is generally recommended as it is more flexible, but Canvas may be preferable.
 
 All examples are shown using modern JavaScript modules and syntax. CommonJS `require('qrcode.react')` is also supported.
 
@@ -40,29 +40,281 @@ ReactDOM.render(
 
 ## Available Props
 
-| prop            | type                         | default value | note |
-| --------------- | ---------------------------- | ------------- | ---- |
-| `value`         | `string`                     |
-| `size`          | `number`                     | `128`         |
-| `bgColor`       | `string`                     | `"#FFFFFF"`   | CSS color |
-| `fgColor`       | `string`                     | `"#000000"`   | CSS color |
-| `level`         | `string` (`'L' 'M' 'Q' 'H'`) | `'L'`         |
-| `minVersion`    | `number` (1-40)              | `1`           | QR Code versions are 1-40. The optimal (lowest) version is determined for the `value` provided, using this minimum as the lower bound.
-| `includeMargin` | `boolean`                    | `false`       | **DEPRECATED**. This is being removed in favor of `marginSize` |
-| `marginSize`    | `number`                     | `0`           | Specifies the number of _modules_ to use for margin around the symbol. The QR Code specification requires `4`, however you may use other values. Values will be turned to integers with `Math.floor`. Overrides `includeMargin` default value when specified |
-| `imageSettings` | `object`                     |               | See below |
+Below is a condensed type definition of the props `QRCodeSVG` and `QRCodeCanvas` accept.
+
+```ts
+type QRProps = {
+  /**
+   * The value to encode into the QR Code.
+   */
+  value: string;
+  /**
+   * The size, in pixels, to render the QR Code.
+   * @defaultValue 128
+   */
+  size?: number;
+  /**
+   * The Error Correction Level to use.
+   * @defaultValue L
+   */
+  level?: 'L' | 'M' | 'Q' | 'H';
+  /**
+   * The background color used to render the QR Code.
+   * @see https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+   * @defaultValue #FFFFFF
+   */
+  bgColor?: string;
+  /**
+   * The foregtound color used to render the QR Code.
+   * @see https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+   * @defaultValue #000000
+   */
+  fgColor?: string;
+  /**
+   * Whether or not a margin of 4 modules should be rendered as a part of the
+   * QR Code.
+   * @deprecated Use `marginSize` instead.
+   * @defaultValue false
+   */
+  includeMargin?: boolean;
+  /**
+   * The number of _modules_ to use for margin. The QR Code specification
+   * requires `4`, however you can specify any number. Values will be turned to
+   * integers with `Math.floor`. Overrides `includeMargin` when both are specified.
+   * @defaultValue 0
+   */
+  marginSize?: number;
+  /**
+   * The title to assign to the QR Code. Used for accessibility reasons.
+   */
+  title?: string;
+  /**
+   * The minimum version used when encoding the QR Code. Valid values are 1-40
+   * with higher values resulting in more complex QR Codes. The optimal
+   * (lowest) version is determined for the `value` provided, using `minVersion`
+   * as the lower bound.
+   * @defaultValue 1
+   */
+  minVersion?: number;
+  /**
+   * The settings for the embedded image.
+   */
+  imageSettings?: {
+    /**
+     * The URI of the embedded image.
+     */
+    src: string;
+    /**
+     * The height, in pixels, of the image.
+     */
+    height: number;
+    /**
+     * The width, in pixels, of the image.
+     */
+    width: number;
+    /**
+     * Whether or not to "excavate" the modules around the embedded image. This
+     * means that any modules the embedded image overlaps will use the background
+     * color.
+     */
+    excavate: boolean;
+    /**
+     * The horiztonal offset of the embedded image, starting from the top left corner.
+     * Will center if not specified.
+     */
+    x?: number;
+    /**
+     * The vertical offset of the embedded image, starting from the top left corner.
+     * Will center if not specified.
+     */
+    y?: number;
+    /**
+     * The opacity of the embedded image in the range of 0-1.
+     * @defaultValue 1
+     */
+    opacity?: number;
+    /**
+     * The cross-origin value to use when loading the image. This is used to
+     * ensure compatibility with CORS, particularly when extracting image data
+     * from QRCodeCanvas.
+     * Note: `undefined` is treated differently than the seemingly equivalent
+     * empty string. This is intended to align with HTML behavior where omitting
+     * the attribute behaves differently than the empty string.
+     */
+    crossOrigin?: 'anonymous' | 'use-credentials' | '' | undefined;
+  };
+};
+```
+
+### `value`
+
+The value to encode into the QR Code. See [Encoding Mode](#encoding-mode) for additional details.
+
+| | |
+|-|-|
+| Type | `string` |
+| Default Value | |
+
+### `size`
+
+The size, in pixels, to render the QR Code.
+
+|||
+|-|-|
+| Type | `number` |
+| Default Value | `128` |
+
+### `level`
+
+The Error Correction Level to use.
+
+|||
+|-|-|
+| Type | `L \| M \| Q \| H` |
+| Default Value | `L` |
+
+### `bgColor`
+
+The background color used to render the QR Code. This is passed directly to the Canvas (`ctx.fillStyle = bgColor`) or the SVG `<path>` (`fill={bgColor}`), both which accept any [CSS color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value).
+
+|||
+|-|-|
+| Type | `string` |
+| Default Value | `#FFFFFF` |
+
+### `fgColor`
+
+The foreground color used to render the QR Code. It follows the same constraints as `bgColor`
+
+|||
+|-|-|
+| Type | `string` |
+| Default Value | `#000000` |
+
+### `includeMargin`
+
+> [!WARNING]
+> This has been deprecated in v4 and will be removed in a future version. Use `marginSize` instead.
+
+Whether or not a margin of 4 modules should be rendered as a part of the QR Code.
+
+|||
+|-|-|
+| Type | `boolean` |
+| Default Value | `false` |
+
+### `marginSize`
+
+The number of _modules_ to use for margin. The QR Code specification requires `4`, however you can specify any number. Values will be turned to integers with `Math.floor`. Overrides `includeMargin` when both are specified.
+
+|||
+|-|-|
+| Type | `number` |
+| Default Value | `0` |
+
+### `title`
+
+The title to assign to the QR Code. Used for accessibility reasons.
+
+|||
+|-|-|
+| Type | `string` |
+| Default Value | |
+
+### `minVersion`
+
+The minimum version used when encoding the QR Code. Valid values are 1-40 with higher values resulting in more complex QR Codes. The optimal (lowest) version is determined for the `value` provided, using `minVersion` as the lower bound.
+
+|||
+|-|-|
+| Type | `number` |
+| Default Value | `1` |
 
 ### `imageSettings`
 
-| field      | type      | default value     | note |
-| ---------- | --------- | ----------------- | ---- |
-| `src`      | `string`  |
-| `x`        | `number`  | none              | Will attempt to center if not specified |
-| `y`        | `number`  | none              | Will attempt to center if not specified |
-| `height`   | `number`  | 10% of `size`     |
-| `width`    | `number`  | 10% of `size`     |
-| `excavate` | `boolean` | `false`           |
-| `opacity`  | `number`  | 1                 |
+Used to specify the details for an embedded image, often used to embed a logo.
+
+|||
+|-|-|
+| Type | `object` (see fields below) |
+| Default Value | |
+
+### `imageSettings.src`
+
+The URI of the embedded image. This will get passed directly to `src` of an `img` element for `QRCodeCanvas` or the `href` of an inline `image` for `QRCodeSVG`.
+
+|||
+|-|-|
+| Type | `string` |
+| Default Value | |
+
+### `imageSettings.height`
+
+The height, in pixels, of the embedded image.
+
+|||
+|-|-|
+| Type | `number` |
+| Default Value | |
+
+### `imageSettings.width`
+
+The width, in pixels, of the embedded image.
+
+|||
+|-|-|
+| Type | `number` |
+| Default Value | |
+
+### `imageSettings.excavate`
+
+Whether or not to "excavate" the modules around the embedded image. This means that any modules the embedded image overlaps will use the background color. Use this to ensure clean edges around your image. It is also useful when embedding images with transparency.
+
+|||
+|-|-|
+| Type | `boolean` |
+| Default Value | |
+
+### `imageSettings.x`
+
+The horizontal offset, in pixels, of the embedded image. Positioning follows standard DOM positioning, with top left corner being 0.
+
+When not specified, will center the image.
+
+|||
+|-|-|
+| Type | `number` |
+| Default Value | |
+
+### `imageSettings.y`
+
+The vertical offset, in pixels, of the embedded image. Positioning follows standard DOM positioning, with top left corner being 0.
+
+When not specified, will center the image.
+
+|||
+|-|-|
+| Type | `number` |
+| Default Value | |
+
+### `imageSettings.opacity`
+
+The opacity of the embedded image, in the range of 0 to 1.
+
+|||
+|-|-|
+| Type | `number` |
+| Default Value | 1 |
+
+### `imageSettings.crossOrigin`
+
+The `cross-origin` value to use when loading the embedded image. Note that `undefined` works as typically does with React, excluding the attribute from the DOM node. This is intended to align with HTML behavior where omitting the attribute behaves differently than the empty string.
+
+|||
+|-|-|
+| Type | `string` |
+| Default Value | |
+
 
 ## Custom Styles
 
