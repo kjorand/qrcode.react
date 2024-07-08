@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: ISC
  */
 
-import React, {useRef, useEffect, useState} from 'react';
+import React from 'react';
 import type {CSSProperties} from 'react';
 import qrcodegen from './third-party/qrcodegen';
 
@@ -184,16 +184,16 @@ function QRCodeCanvas(props: QRPropsCanvas) {
     ...otherProps
   } = props;
   const imgSrc = imageSettings?.src;
-  const _canvas = useRef<HTMLCanvasElement>(null);
-  const _image = useRef<HTMLImageElement>(null);
+  const _canvas = React.useRef<HTMLCanvasElement>(null);
+  const _image = React.useRef<HTMLImageElement>(null);
 
   // We're just using this state to trigger rerenders when images load. We
   // Don't actually read the value anywhere. A smarter use of useEffect would
   // depend on this value.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isImgLoaded, setIsImageLoaded] = useState(false);
+  const [isImgLoaded, setIsImageLoaded] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Always update the canvas. It's cheap enough and we want to be correct
     // with the current state.
     if (_canvas.current != null) {
@@ -273,7 +273,7 @@ function QRCodeCanvas(props: QRPropsCanvas) {
 
   // Ensure we mark image loaded as false here so we trigger updating the
   // canvas in our other effect.
-  useEffect(() => {
+  React.useEffect(() => {
     setIsImageLoaded(false);
   }, [imgSrc]);
 
