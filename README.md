@@ -152,8 +152,8 @@ The value to encode into the QR Code. See [Encoding Mode](#encoding-mode) for ad
 
 | | |
 |-|-|
-| Type | `string` |
-| Default Value | |
+| **Type** | `string` |
+| **Default Value** | |
 
 ### `size`
 
@@ -161,8 +161,8 @@ The size, in pixels, to render the QR Code.
 
 |||
 |-|-|
-| Type | `number` |
-| Default Value | `128` |
+| **Type** | `number` |
+| **Default Value** | `128` |
 
 ### `level`
 
@@ -170,8 +170,8 @@ The Error Correction Level to use.
 
 |||
 |-|-|
-| Type | `L \| M \| Q \| H` |
-| Default Value | `L` |
+| **Type** | `L \| M \| Q \| H` |
+| **Default Value** | `L` |
 
 ### `bgColor`
 
@@ -179,8 +179,8 @@ The background color used to render the QR Code. This is passed directly to the 
 
 |||
 |-|-|
-| Type | `string` |
-| Default Value | `#FFFFFF` |
+| **Type** | `string` |
+| **Default Value** | `#FFFFFF` |
 
 ### `fgColor`
 
@@ -188,8 +188,8 @@ The foreground color used to render the QR Code. It follows the same constraints
 
 |||
 |-|-|
-| Type | `string` |
-| Default Value | `#000000` |
+| **Type** | `string` |
+| **Default Value** | `#000000` |
 
 ### `includeMargin`
 
@@ -200,8 +200,8 @@ Whether or not a margin of 4 modules should be rendered as a part of the QR Code
 
 |||
 |-|-|
-| Type | `boolean` |
-| Default Value | `false` |
+| **Type** | `boolean` |
+| **Default Value** | `false` |
 
 ### `marginSize`
 
@@ -209,8 +209,8 @@ The number of _modules_ to use for margin. The QR Code specification requires `4
 
 |||
 |-|-|
-| Type | `number` |
-| Default Value | `0` |
+| **Type** | `number` |
+| **Default Value** | `0` |
 
 ### `title`
 
@@ -218,8 +218,8 @@ The title to assign to the QR Code. Used for accessibility reasons.
 
 |||
 |-|-|
-| Type | `string` |
-| Default Value | |
+| **Type** | `string` |
+| **Default Value** | |
 
 ### `minVersion`
 
@@ -227,8 +227,8 @@ The minimum version used when encoding the QR Code. Valid values are 1-40 with h
 
 |||
 |-|-|
-| Type | `number` |
-| Default Value | `1` |
+| **Type** | `number` |
+| **Default Value** | `1` |
 
 ### `imageSettings`
 
@@ -236,8 +236,8 @@ Used to specify the details for an embedded image, often used to embed a logo.
 
 |||
 |-|-|
-| Type | `object` (see fields below) |
-| Default Value | |
+| **Type** | `object` (see fields below) |
+| **Default Value** | |
 
 ### `imageSettings.src`
 
@@ -245,8 +245,8 @@ The URI of the embedded image. This will get passed directly to `src` of an `img
 
 |||
 |-|-|
-| Type | `string` |
-| Default Value | |
+| **Type** | `string` |
+| **Default Value** | |
 
 ### `imageSettings.height`
 
@@ -254,8 +254,8 @@ The height, in pixels, of the embedded image.
 
 |||
 |-|-|
-| Type | `number` |
-| Default Value | |
+| **Type** | `number` |
+| **Default Value** | |
 
 ### `imageSettings.width`
 
@@ -263,8 +263,8 @@ The width, in pixels, of the embedded image.
 
 |||
 |-|-|
-| Type | `number` |
-| Default Value | |
+| **Type** | `number` |
+| **Default Value** | |
 
 ### `imageSettings.excavate`
 
@@ -272,8 +272,8 @@ Whether or not to "excavate" the modules around the embedded image. This means t
 
 |||
 |-|-|
-| Type | `boolean` |
-| Default Value | |
+| **Type** | `boolean` |
+| **Default Value** | |
 
 ### `imageSettings.x`
 
@@ -283,8 +283,8 @@ When not specified, will center the image.
 
 |||
 |-|-|
-| Type | `number` |
-| Default Value | |
+| **Type** | `number` |
+| **Default Value** | |
 
 ### `imageSettings.y`
 
@@ -294,8 +294,8 @@ When not specified, will center the image.
 
 |||
 |-|-|
-| Type | `number` |
-| Default Value | |
+| **Type** | `number` |
+| **Default Value** | |
 
 ### `imageSettings.opacity`
 
@@ -303,8 +303,8 @@ The opacity of the embedded image, in the range of 0 to 1.
 
 |||
 |-|-|
-| Type | `number` |
-| Default Value | 1 |
+| **Type** | `number` |
+| **Default Value** | 1 |
 
 ### `imageSettings.crossOrigin`
 
@@ -312,8 +312,8 @@ The `cross-origin` value to use when loading the embedded image. Note that `unde
 
 |||
 |-|-|
-| Type | `string` |
-| Default Value | |
+| **Type** | `string` |
+| **Default Value** | |
 
 
 ## Custom Styles
