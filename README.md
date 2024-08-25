@@ -150,41 +150,41 @@ type QRProps = {
 
 The value to encode into the QR Code. See [Encoding Mode](#encoding-mode) for additional details.
 
-| Type | Default Value |
-|-|-|
-| `string` | — |
+| Type     | Default Value |
+| -------- | ------------- |
+| `string` | —             |
 
 ### `size`
 
 The size, in pixels, to render the QR Code.
 
-| Type | Default Value |
-|-|-|
-| `number` | `128` |
+| Type     | Default Value |
+| -------- | ------------- |
+| `number` | `128`         |
 
 ### `level`
 
 The Error Correction Level to use.
 
-| Type | Default Value |
-|-|-|
-| `L \| M \| Q \| H` | `L` |
+| Type               | Default Value |
+| ------------------ | ------------- |
+| `L \| M \| Q \| H` | `L`           |
 
 ### `bgColor`
 
 The background color used to render the QR Code. This is passed directly to the Canvas (`ctx.fillStyle = bgColor`) or the SVG `<path>` (`fill={bgColor}`), both which accept any [CSS color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value).
 
-| Type | Default Value |
-|-|-|
-| `string` | `#FFFFFF` |
+| Type     | Default Value |
+| -------- | ------------- |
+| `string` | `#FFFFFF`     |
 
 ### `fgColor`
 
 The foreground color used to render the QR Code. It follows the same constraints as `bgColor`
 
-| Type | Default Value |
-|-|-|
-| `string` | `#000000` |
+| Type     | Default Value |
+| -------- | ------------- |
+| `string` | `#000000`     |
 
 ### `includeMargin`
 
@@ -193,73 +193,73 @@ The foreground color used to render the QR Code. It follows the same constraints
 
 Whether or not a margin of 4 modules should be rendered as a part of the QR Code.
 
-| Type | Default Value |
-|-|-|
-| `boolean` | `false` |
+| Type      | Default Value |
+| --------- | ------------- |
+| `boolean` | `false`       |
 
 ### `marginSize`
 
 The number of _modules_ to use for margin. The QR Code specification requires `4`, however you can specify any number. Values will be turned to integers with `Math.floor`. Overrides `includeMargin` when both are specified.
 
-| Type | Default Value |
-|-|-|
-| `number` | `0` |
+| Type     | Default Value |
+| -------- | ------------- |
+| `number` | `0`           |
 
 ### `title`
 
 The title to assign to the QR Code. Used for accessibility reasons.
 
-| Type | Default Value |
-|-|-|
-| `string` | — |
+| Type     | Default Value |
+| -------- | ------------- |
+| `string` | —             |
 
 ### `minVersion`
 
 The minimum version used when encoding the QR Code. Valid values are 1-40 with higher values resulting in more complex QR Codes. The optimal (lowest) version is determined for the `value` provided, using `minVersion` as the lower bound.
 
-| Type | Default Value |
-|-|-|
-| `number` | `1` |
+| Type     | Default Value |
+| -------- | ------------- |
+| `number` | `1`           |
 
 ### `imageSettings`
 
 Used to specify the details for an embedded image, often used to embed a logo.
 
-| Type | Default Value |
-|-|-|
-| `object` (see fields below) | — |
+| Type                        | Default Value |
+| --------------------------- | ------------- |
+| `object` (see fields below) | —             |
 
 ### `imageSettings.src`
 
 The URI of the embedded image. This will get passed directly to `src` of an `img` element for `QRCodeCanvas` or the `href` of an inline `image` for `QRCodeSVG`.
 
-| Type | Default Value |
-|-|-|
-| `string` | — |
+| Type     | Default Value |
+| -------- | ------------- |
+| `string` | —             |
 
 ### `imageSettings.height`
 
 The height, in pixels, of the embedded image.
 
-| Type | Default Value |
-|-|-|
-| `number` | — |
+| Type     | Default Value |
+| -------- | ------------- |
+| `number` | —             |
 
 ### `imageSettings.width`
 
 The width, in pixels, of the embedded image.
 
-| Type | Default Value |
-|-|-|
-| `number` | — |
+| Type     | Default Value |
+| -------- | ------------- |
+| `number` | —             |
 
 ### `imageSettings.excavate`
 
 Whether or not to "excavate" the modules around the embedded image. This means that any modules the embedded image overlaps will use the background color. Use this to ensure clean edges around your image. It is also useful when embedding images with transparency.
 
-| Type | Default Value |
-|-|-|
-| `boolean` | — |
+| Type      | Default Value |
+| --------- | ------------- |
+| `boolean` | —             |
 
 ### `imageSettings.x`
 
@@ -267,9 +267,9 @@ The horizontal offset, in pixels, of the embedded image. Positioning follows sta
 
 When not specified, will center the image.
 
-| Type | Default Value |
-|-|-|
-| `number` | — |
+| Type     | Default Value |
+| -------- | ------------- |
+| `number` | —             |
 
 ### `imageSettings.y`
 
@@ -277,26 +277,25 @@ The vertical offset, in pixels, of the embedded image. Positioning follows stand
 
 When not specified, will center the image.
 
-| Type | Default Value |
-|-|-|
-| `number` | — |
+| Type     | Default Value |
+| -------- | ------------- |
+| `number` | —             |
 
 ### `imageSettings.opacity`
 
 The opacity of the embedded image, in the range of 0 to 1.
 
-| Type | Default Value |
-|-|-|
-| `number` | 1 |
+| Type     | Default Value |
+| -------- | ------------- |
+| `number` | 1             |
 
 ### `imageSettings.crossOrigin`
 
 The `cross-origin` value to use when loading the embedded image. Note that `undefined` works as typically does with React, excluding the attribute from the DOM node. This is intended to align with HTML behavior where omitting the attribute behaves differently than the empty string.
 
-| Type | Default Value |
-|-|-|
-| `string` | — |
-
+| Type     | Default Value |
+| -------- | ------------- |
+| `string` | —             |
 
 ## Custom Styles
 
