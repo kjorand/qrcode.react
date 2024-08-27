@@ -55,6 +55,7 @@ type QRProps = {
   size?: number;
   /**
    * The Error Correction Level to use.
+   * @see https://www.qrcode.com/en/about/error_correction.html
    * @defaultValue L
    */
   level?: 'L' | 'M' | 'Q' | 'H';
@@ -164,7 +165,14 @@ The size, in pixels, to render the QR Code.
 
 ### `level`
 
-The Error Correction Level to use.
+The Error Correction Level to use. Information is encoded in QR Codes such that they can lose part of their visible areas and still be decodable. The amount of correction depends on this value. Higher error correction will result in more complex QR Codes.
+
+- `L` = low (~7%)
+- `M` = medium (~15%)
+- `Q` = quartile (~25%)
+- `H` = high (~30%)
+
+See [Wikipedia](https://en.wikipedia.org/wiki/QR_code#Error_correction) or the [official QR Code documentation](https://www.qrcode.com/en/about/error_correction.html) for a more detailed explaination.
 
 | Type               | Default Value |
 | ------------------ | ------------- |
@@ -301,7 +309,8 @@ The `cross-origin` value to use when loading the embedded image. Note that `unde
 
 `qrcode.react` will pass through any additional props to the underlying DOM node (`<svg>` or `<canvas>`). This allows the use of inline `style` or custom `className` to customize the rendering. One common use would be to support a responsive layout.
 
-**Note:** In order to render QR Codes in `<canvas>` on high density displays, we scale the canvas element to contain an appropriate number of pixels and then use inline styles to scale back down. We will merge any additional styles, with custom `height` and `width` overriding our own values. This allows scaling to percentages _but_ if scaling beyond the `size`, you will encounter blurry images. I recommend detecting resizes with something like [react-measure](https://github.com/souporserious/react-measure) to detect and pass the appropriate size when rendering to `<canvas>`.
+> [!NOTE]
+> In order to render QR Codes in `<canvas>` on high density displays, we scale the canvas element to contain an appropriate number of pixels and then use inline styles to scale back down. We will merge any additional styles, with custom `height` and `width` overriding our own values. This allows scaling to percentages _but_ if scaling beyond the `size`, you will encounter blurry images. I recommend detecting resizes with something like [react-measure](https://github.com/souporserious/react-measure) to detect and pass the appropriate size when rendering to `<canvas>`.
 
 <img src="qrcode.png" height="256" width="256">
 

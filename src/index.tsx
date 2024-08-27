@@ -80,6 +80,7 @@ type QRProps = {
   size?: number;
   /**
    * The Error Correction Level to use.
+   * @see https://www.qrcode.com/en/about/error_correction.html
    * @defaultValue L
    */
   level?: ErrorCorrectionLevel;
