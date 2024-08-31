@@ -378,6 +378,11 @@ function QRCodeSVG(props: QRPropsSVG) {
 type RootProps =
   | (QRPropsSVG & {renderAs: 'svg'})
   | (QRPropsCanvas & {renderAs?: 'canvas'});
+
+/**
+ * @deprecated This has been removed in v4. Use named exports instead.
+ *             If relying on an unspecified value for `renderAs`, use `QRCodeCanvas`.
+ */
 const QRCode = (props: RootProps) => {
   const {renderAs, ...otherProps} = props;
   if (renderAs === 'svg') {
