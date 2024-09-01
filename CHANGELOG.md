@@ -1,3 +1,12 @@
+## [3.2.0] - 2024-08-31
+
+### Fixed
+- Improved support for dual publishing of ESM/CJS modules for better compatibility with tools. (#301, #368)
+
+### Changed
+- Added `@deprecated` JSDoc to default export for additional visibility in editors to TypeScript users.
+
+
 ## [3.1.0] - 2022-06-25
 
 ### Fixed
